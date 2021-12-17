@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Crosshair : MonoBehaviour
 {
@@ -10,9 +12,15 @@ public class Crosshair : MonoBehaviour
 
     private AudioSource gunshotSFX;
 
+    public int maxShots = 4;
+    private int shotsRemaining;
+    [SerializeField] private Text shotsText;
+
     private void Start()
     {
         gunshotSFX = this.GetComponent<AudioSource>();
+        shotsRemaining = maxShots;
+        shotsText.text = "Shots: " + shotsRemaining;
     }
 
     // Update is called once per frame
@@ -31,6 +39,7 @@ public class Crosshair : MonoBehaviour
             {
                 //play the gunshot sound effect
                 gunshotSFX.Play();
+                shotsRemaining--;
 
                 //do a raycast from the crosshair's position
                 RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.zero);
@@ -40,7 +49,17 @@ public class Crosshair : MonoBehaviour
                 {
                     //invoke the event saying the duck was hit
                     hitDuck?.Invoke(hit.collider.gameObject);
+                    shotsRemaining++;
                 }
+
+                //if you run out of shots game over
+                if(shotsRemaining <= 0)
+                {
+                    //lose condition
+                    SceneManager.LoadScene("GameOverScreen");
+                }
+
+                shotsText.text = "Shots: " + shotsRemaining;
             }
         }
     }

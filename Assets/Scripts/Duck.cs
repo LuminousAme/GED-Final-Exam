@@ -35,11 +35,10 @@ public class Duck : MonoBehaviour
             //update the currenttime
             currentTime += Time.deltaTime;
 
-            //if the duck has finished it's path the game is over
+            //if the duck has finished it's path then respawn it at the beginning
             if (currentTime > duration)
             {
-                //lose condition
-                SceneManager.LoadScene("GameOverScreen");
+                gameObject.SetActive(false);
             }
         }
     }
