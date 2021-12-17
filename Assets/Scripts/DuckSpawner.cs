@@ -26,6 +26,8 @@ public class DuckSpawner : MonoBehaviour
         for(int i = 0; i < numOfDucksAtATime; i++)
         {
             GameObject newDuck = Instantiate(duckPrefab, new Vector3(0.0f, 0.0f, 2.0f), Quaternion.identity);
+            //get the scale from the dll
+            newDuck.transform.localScale = ScalePluginManager.GetObjectScale(newDuck.transform.localScale);
             newDuck.SetActive(false);
             duckPool.Add(newDuck);
         }
