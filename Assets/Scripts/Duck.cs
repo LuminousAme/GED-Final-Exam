@@ -26,18 +26,21 @@ public class Duck : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //calculate the position of the duck
-        float t = Mathf.Clamp(currentTime / duration, 0.0f, 1.0f);
-        transform.position = Vector3.Lerp(new Vector3(spawn.x, spawn.y, 2.0f), new Vector3(end.x, end.y, 2.0f), t);
-
-        //update the currenttime
-        currentTime += Time.deltaTime;
-
-        //if the duck has finished it's path the game is over
-        if(currentTime > duration)
+        if (!PauseManager.GetPaused())
         {
-            //lose condition
-            SceneManager.LoadScene("GameOverScreen");
+            //calculate the position of the duck
+            float t = Mathf.Clamp(currentTime / duration, 0.0f, 1.0f);
+            transform.position = Vector3.Lerp(new Vector3(spawn.x, spawn.y, 2.0f), new Vector3(end.x, end.y, 2.0f), t);
+
+            //update the currenttime
+            currentTime += Time.deltaTime;
+
+            //if the duck has finished it's path the game is over
+            if (currentTime > duration)
+            {
+                //lose condition
+                SceneManager.LoadScene("GameOverScreen");
+            }
         }
     }
 }

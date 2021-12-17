@@ -18,26 +18,29 @@ public class Crosshair : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //get the mouse position in world space
-        Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-        //update the cursor position to follow it
-        transform.position = mousePos;
-
-        //check if they're clicking the left mouse button
-        if (Input.GetMouseButtonDown(0))
+        if(!PauseManager.GetPaused())
         {
-            //play the gunshot sound effect
-            gunshotSFX.Play();
+            //get the mouse position in world space
+            Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-            //do a raycast from the crosshair's position
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.zero);
+            //update the cursor position to follow it
+            transform.position = mousePos;
 
-            //check if it was a duck that was hit
-            if (hit.collider && hit.collider.tag == "Duck")
+            //check if they're clicking the left mouse button
+            if (Input.GetMouseButtonDown(0))
             {
-                //invoke the event saying the duck was hit
-                hitDuck?.Invoke(hit.collider.gameObject);
+                //play the gunshot sound effect
+                gunshotSFX.Play();
+
+                //do a raycast from the crosshair's position
+                RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.zero);
+
+                //check if it was a duck that was hit
+                if (hit.collider && hit.collider.tag == "Duck")
+                {
+                    //invoke the event saying the duck was hit
+                    hitDuck?.Invoke(hit.collider.gameObject);
+                }
             }
         }
     }
