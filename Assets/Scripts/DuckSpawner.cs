@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class DuckSpawner : MonoBehaviour
 {
@@ -10,6 +11,9 @@ public class DuckSpawner : MonoBehaviour
     [SerializeField] private int totalNumOfDucks = 10;
     private int ducksHit = 0; //when the ducks left is equal or greater than the total number play the win condition
     [SerializeField] private int numOfDucksAtATime = 2;
+
+    private int score = 0;
+    [SerializeField] private Text scoreText;
 
     //oberserver pattern, link the duckhit function up with the event, the => is just a shorthand for a one line function
     private void OnEnable() => Crosshair.hitDuck += DuckHit;
@@ -64,8 +68,14 @@ public class DuckSpawner : MonoBehaviour
         //increase the number of ducks that have been hit
         ducksHit++;
 
+        //increase the score
+        score += 100;
+
+        //update the score text on display
+        scoreText.text = "Score: " + score.ToString();
+
         //if that number is equal or greater than the total number than end the game
-        if(ducksHit >= totalNumOfDucks)
+        if (ducksHit >= totalNumOfDucks)
         {
             //win condition
             SceneManager.LoadScene("WinScreen");
