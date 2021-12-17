@@ -5,8 +5,8 @@ using UnityEngine;
 public class Crosshair : MonoBehaviour
 {
     //delegate function and associated event for when a duck is hit
-    public delegate void HitTarget();
-    static event HitTarget hitDuck;
+    public delegate void HitTarget(GameObject duck);
+    public static event HitTarget hitDuck;
 
     // Update is called once per frame
     void Update()
@@ -23,14 +23,11 @@ public class Crosshair : MonoBehaviour
             //do a raycast from the crosshair's position
             RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.zero);
 
-            if (hit.collider)
-                Debug.Log(hit.collider.name);
-
             //check if it was a duck that was hit
             if (hit.collider && hit.collider.tag == "Duck")
             {
                 //invoke the event saying the duck was hit
-                hitDuck?.Invoke();
+                hitDuck?.Invoke(hit.collider.gameObject);
             }
         }
     }
