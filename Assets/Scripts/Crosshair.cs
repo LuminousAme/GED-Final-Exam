@@ -8,6 +8,13 @@ public class Crosshair : MonoBehaviour
     public delegate void HitTarget(GameObject duck);
     public static event HitTarget hitDuck;
 
+    private AudioSource gunshotSFX;
+
+    private void Start()
+    {
+        gunshotSFX = this.GetComponent<AudioSource>();
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -20,6 +27,9 @@ public class Crosshair : MonoBehaviour
         //check if they're clicking the left mouse button
         if (Input.GetMouseButtonDown(0))
         {
+            //play the gunshot sound effect
+            gunshotSFX.Play();
+
             //do a raycast from the crosshair's position
             RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.zero);
 
