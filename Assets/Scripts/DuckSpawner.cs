@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class DuckSpawner : MonoBehaviour
 {
@@ -64,9 +65,10 @@ public class DuckSpawner : MonoBehaviour
         ducksHit++;
 
         //if that number is equal or greater than the total number than end the game
-        if(ducksHit > totalNumOfDucks)
+        if(ducksHit >= totalNumOfDucks)
         {
             //win condition
+            SceneManager.LoadScene("WinScreen");
         }
     }
 }

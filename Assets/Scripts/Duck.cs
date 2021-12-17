@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Duck : MonoBehaviour
 {
@@ -36,7 +37,7 @@ public class Duck : MonoBehaviour
         if(currentTime > duration)
         {
             //lose condition
-            gameObject.SetActive(false);
+            SceneManager.LoadScene("GameOverScreen");
         }
     }
 }
